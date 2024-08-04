@@ -44,7 +44,8 @@
 #' ))
 #' 
 #' ggplot() + geom_function(fun = dnorm, args = list(mean=0, sd=1)) + xlim(-3,3)
-#' ggplot() + geoms_function(dnorm, dots = list(mean=0:1)) + xlim(-3,4)
+#' ggplot() + geoms_function(dnorm, dots = list(mean=1:0), 
+#'   labels = latex2exp::TeX(c('$mu_1=1$', '$mu_0=0$')), aes_ = c('colour','linetype')) + xlim(-3,4)
 #' ggplot() + geoms_function(dnorm, dots = list(mean=0, sd=c(1,1.3)), n=501L) + xlim(-5,5)
 #' ggplot() + geoms_function(dnorm, dots=list(mean=0:1, sd=c(1,.9)), 
 #'   labels = letters[1:2], aes_ = 'linetype') + xlim(-5,5)
@@ -70,7 +71,7 @@
 #'  xlim(-5,5)
 #' # but the order of labels are wrong 
 #' # .. i.e., automatically alphabetical, not what we want
-#' @importFrom ggplot2 geom_function labs
+#' @importFrom ggplot2 geom_function labs scale_colour_discrete scale_linetype_discrete
 #' @export
 geoms_function <- function(
     fun, 
@@ -98,11 +99,23 @@ geoms_function <- function(
   # very tedius to have linebreak in base::expression
   
   nag <- length(args)
-  if (anyDuplicated(labels)) stop('`labels` must be unique')
-  if (length(labels) != nag) stop('`labels` and `args` must be of same length')
   brk <- seq_len(nag)
-  attr(brk, which = 'levels') <- labels
-  class(brk) <- 'factor'
+  if (length(labels) != nag) stop('`labels` and `args` must be of same length')
+  # okay for `labels` being 'character' or 'expression'! 
+  
+  if (is.character(labels)) {
+    if (anyDuplicated(labels)) stop('`labels` must be unique')
+    attr(brk, which = 'levels') <- labels
+  } else if (is.expression(labels)) {
+    labels <- unname(labels) # must! otherwise ?ggplot2::scale_colour_discrete will ignore!!
+    attr(brk, which = 'levels') <- as.character(brk)
+    #attr(brk, which = 'levels') <- labels # error for 'expression' `labels`
+    expr_labels_ <- lapply(paste0('scale_', aes_, '_discrete'), FUN = function(i) {
+      do.call(what = i, args = list(labels = labels))
+    })
+  } else stop('`labels` must either be character or expression')
+  
+  class(brk) <- 'factor' # 'factor' is malformed without levels!!
   
   n_aes <- length(aes_)
   
@@ -121,6 +134,8 @@ geoms_function <- function(
       mapping = amap, 
       args = args
     ), MoreArgs = list(fun = fun, ...)), 
+    
+    if (is.expression(labels)) expr_labels_,
     
     list(
       do.call(what = 'labs', c(lab_aes, list(y = NULL)))

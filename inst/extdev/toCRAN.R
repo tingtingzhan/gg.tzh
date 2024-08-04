@@ -1,5 +1,6 @@
 
-devtools::load_all('../packageAdvanced')
+library(adv.tzh); devtools::install_github('tingtingzhan/adv.tzh')
+
 
 
 

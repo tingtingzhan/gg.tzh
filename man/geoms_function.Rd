@@ -56,7 +56,8 @@ theme_set(theme(
 ))
 
 ggplot() + geom_function(fun = dnorm, args = list(mean=0, sd=1)) + xlim(-3,3)
-ggplot() + geoms_function(dnorm, dots = list(mean=0:1)) + xlim(-3,4)
+ggplot() + geoms_function(dnorm, dots = list(mean=1:0), 
+  labels = latex2exp::TeX(c('$mu_1=1$', '$mu_0=0$')), aes_ = c('colour','linetype')) + xlim(-3,4)
 ggplot() + geoms_function(dnorm, dots = list(mean=0, sd=c(1,1.3)), n=501L) + xlim(-5,5)
 ggplot() + geoms_function(dnorm, dots=list(mean=0:1, sd=c(1,.9)), 
   labels = letters[1:2], aes_ = 'linetype') + xlim(-5,5)
