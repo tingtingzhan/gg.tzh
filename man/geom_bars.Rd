@@ -35,7 +35,6 @@ Function \link{geom_bars} returns a \link[base]{list} of
 Be aware of potential name clash with \code{ggpubr::ggbarplot}.
 }
 \examples{
-library(ggplot2)
 theme_set(theme(
  legend.position = 'inside',
  legend.position.inside = c(.8, .8),

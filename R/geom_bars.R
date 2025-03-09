@@ -23,7 +23,6 @@
 #' Be aware of potential name clash with `ggpubr::ggbarplot`.
 #' 
 #' @examples 
-#' library(ggplot2)
 #' theme_set(theme(
 #'  legend.position = 'inside',
 #'  legend.position.inside = c(.8, .8),

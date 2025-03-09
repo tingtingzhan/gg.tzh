@@ -47,7 +47,6 @@ Multiple function \emph{\strong{geom}}etric objects
 with different parameters.
 }
 \examples{
-library(ggplot2)
 theme_set(theme(
  legend.position = 'inside',
  legend.position.inside = c(.15, .6),

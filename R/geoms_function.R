@@ -35,7 +35,6 @@
 #' \link[ggplot2]{layer}s.
 #' 
 #' @examples 
-#' library(ggplot2)
 #' theme_set(theme(
 #'  legend.position = 'inside',
 #'  legend.position.inside = c(.15, .6),
