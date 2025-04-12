@@ -21,7 +21,7 @@ geom_bars(
 \item{xlim}{\link[base]{length} \eqn{\geq 2} \link[base]{integer} \link[base]{vector}, limit on \eqn{x}-axis.}
 }
 \value{
-Function \link{geom_bars} returns a \link[base]{list} of
+Function \code{\link[=geom_bars]{geom_bars()}} returns a \link[base]{list} of
 \link[ggplot2]{geom_bar}
 \link[ggplot2]{layer}s.
 }
@@ -32,9 +32,10 @@ Function \link{geom_bars} returns a \link[base]{list} of
 ..
 }
 \note{
-Be aware of potential name clash with \code{ggpubr::ggbarplot}.
+Be aware of potential name clash with function \code{ggpubr::ggbarplot}.
 }
 \examples{
+options(use_unicode = FALSE)
 theme_set(theme(
  legend.position = 'inside',
  legend.position.inside = c(.8, .8),
@@ -42,12 +43,7 @@ theme_set(theme(
  legend.background = element_rect(color = 'grey95')
 ))
 
-pdf_ = tempfile(fileext = '.pdf')
-cairo_pdf(filename = pdf_)
 ggplot() + geom_bars(dpois, lambda = 1, xlim = 0:6)
-dev.off()
-system(paste('open', pdf_))
-file.remove(pdf_)
 
 ggplot() + geom_bars(dnbinom, size = 5.2, prob = c(.5, .4), xlim = 0:15)
 
@@ -57,4 +53,9 @@ ggplot() + geom_bars(dpois, lambda = c(1, 1.3), labels = c('Treatment', 'Control
   fill = 'Poisson\nDistribution',
   caption = 'Illustration showing mean-ratio = .77 (Treatment vs. Control)')
  
+# how to make this beautifully?
+ggplot() + 
+ geom_bars(dbinom, size = c(5L, 10L, 20L, 40L), prob = c(.8, .4, .2, .1), xlim = c(0L, 10L)) +
+ geom_bars(dpois, lambda = 4, xlim = c(0L, 10L))
+
 }

@@ -10,14 +10,14 @@ split_list_(x)
 \item{x}{\link[base]{list} of \link[base]{vector}s}
 }
 \value{
-Function \link{split_list_} returns a \link[base]{list}.
+Function \code{\link[=split_list_]{split_list_()}} returns a \link[base]{list}.
 }
 \description{
 ..
 }
 \examples{
-getval_(split_list_(list(mean = 1:2)))
-getval_(split_list_(list(mean = c(exp(1), pi), sd = 1:2)))
-getval_(split_list_(list(df1 = 1, df2 = c(2, 3), ncp = c(.1, .2))))
-
+list(mean = 1:2) |> split_list_() |> getval_()
+list(mean = c(exp(1), pi), sd = 1:2) |> split_list_() |> getval_()
+list(df1 = 1, df2 = c(2, 3), ncp = c(.1, .2)) |> split_list_() |> getval_()
 }
+\keyword{internal}

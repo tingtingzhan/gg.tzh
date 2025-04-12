@@ -56,7 +56,7 @@ m_atop.expression <- function(x, size = c('textstyle', 'displaystyle', 'scriptst
   if (nx == 1L) return(x) # `size` not activated
   size <- match.arg(size)
   Reduce(f = function(e1, e2) as.call(list(quote(atop), e1, e2)), 
-         x = lapply(x, FUN = function(ix) call(name = size, ix)),
+         x = lapply(x, FUN = \(ix) call(name = size, ix)),
          right = right, accumulate = accumulate)
 }
 

@@ -30,7 +30,7 @@
 #' Also see parameter `params` of function \link[ggplot2]{layer}
 #' 
 #' @returns 
-#' Function [geoms_function] returns a \link[base]{list} of 
+#' Function [geoms_function()] returns a \link[base]{list} of 
 #' \link[ggplot2]{geom_function}
 #' \link[ggplot2]{layer}s.
 #' 
@@ -70,6 +70,7 @@
 #'  xlim(-5,5)
 #' # but the order of labels are wrong 
 #' # .. i.e., automatically alphabetical, not what we want
+#'
 #' @importFrom ggplot2 geom_function labs scale_colour_discrete scale_linetype_discrete
 #' @export
 geoms_function <- function(
@@ -105,20 +106,23 @@ geoms_function <- function(
   if (is.character(labels)) {
     if (anyDuplicated(labels)) stop('`labels` must be unique')
     attr(brk, which = 'levels') <- labels
+  } else if (is.factor(labels)) {
+    if (anyDuplicated(labels)) stop('`labels` must be unique')
+    attr(brk, which = 'levels') <- attr(labels, which = 'levels', exact = TRUE)
   } else if (is.expression(labels)) {
     labels <- unname(labels) # must! otherwise ?ggplot2::scale_colour_discrete will ignore!!
     attr(brk, which = 'levels') <- as.character(brk)
     #attr(brk, which = 'levels') <- labels # error for 'expression' `labels`
-    expr_labels_ <- lapply(paste0('scale_', aes_, '_discrete'), FUN = function(i) {
+    expr_labels_ <- lapply(paste0('scale_', aes_, '_discrete'), FUN = \(i) {
       do.call(what = i, args = list(labels = labels))
     })
-  } else stop('`labels` must either be character or expression')
+  } else stop('`labels` must either be `factor` or `expression`')
   
   class(brk) <- 'factor' # 'factor' is malformed without levels!!
   
   n_aes <- length(aes_)
   
-  amap <- lapply(brk, FUN = function(i) { # (i = brk[1L])
+  amap <- lapply(brk, FUN = \(i) { # (i = brk[1L])
     ag <- rep(list(i), times = n_aes)
     names(ag) <- aes_
     do.call(what = 'aes', args = ag)
@@ -157,24 +161,29 @@ geoms_function <- function(
 #' @param x \link[base]{list} of \link[base]{vector}s
 #' 
 #' @returns 
-#' Function [split_list_] returns a \link[base]{list}.
+#' Function [split_list_()] returns a \link[base]{list}.
 #' 
 #' @examples 
-#' getval_(split_list_(list(mean = 1:2)))
-#' getval_(split_list_(list(mean = c(exp(1), pi), sd = 1:2)))
-#' getval_(split_list_(list(df1 = 1, df2 = c(2, 3), ncp = c(.1, .2))))
-#' 
+#' list(mean = 1:2) |> split_list_() |> getval_()
+#' list(mean = c(exp(1), pi), sd = 1:2) |> split_list_() |> getval_()
+#' list(df1 = 1, df2 = c(2, 3), ncp = c(.1, .2)) |> split_list_() |> getval_()
+#' @keywords internal
 #' @export
 split_list_ <- function(x) {
+  
   if (!length(nm <- names(x)) || !all(nzchar(nm))) stop('all elements must be named')
   if (!identical(make.names(nm), nm)) stop('some element names are illegal')
   
-  d <- as.data.frame.list(x) 
+  d <- x |>
+    as.data.frame.list() 
   # .. recycle length
   # .. (no longer used) the *1st* named element of `x` will provide row.names of `d`
   
   # essentially base::split.data.frame by individual rows
-  lapply(seq_len(.row_names_info(d, type = 2L)), FUN = function(i) as.list.data.frame(d[i, , drop = FALSE]))
+  d |>
+    .row_names_info(type = 2L) |> 
+    seq_len() |>
+    lapply(FUN = \(i) d[i, , drop = FALSE] |> as.list.data.frame())
   
 }
 
@@ -186,26 +195,40 @@ split_list_ <- function(x) {
 #' 
 #' @param x ..
 #' 
-#' @returns 
-#' Function [getval_] returns a \link[base]{character} \link[base]{vector}.
+#' @param use_unicode \link[base]{logical} scalar
 #' 
+#' @returns 
+#' Function [getval_()] returns a \link[base]{character} \link[base]{vector}.
+#' 
+#' @keywords internal
 #' @export
-getval_ <- function(x) {
-  # `x` is return of [split_list_]
+getval_ <- function(x, use_unicode = getOption('use_unicode')) {
+  
+  # `x` is return of [split_list_()]
   x <- lapply(x, FUN = as.list) # already ?base::is.list, does not matter
   
   pnms <- lapply(x, FUN = names)
   if (!all(duplicated.default(pnms)[-1L])) stop('parameter names must be all-equal')
+  
   pnm <- pnms[[1L]]
-  pnm <- gsub(pattern = 'alpha', replacement = '\u03b1', x = pnm)
-  pnm <- gsub(pattern = 'lambda', replacement = '\u03bb', x = pnm)
-  pnm <- gsub(pattern = 'nu', replacement = '\u03bd', x = pnm)
-  pnm <- gsub(pattern = 'xi', replacement = '\u03be', x = pnm)
-  pnm <- gsub(pattern = 'omega', replacement = '\u03c9', x = pnm)
+  if (use_unicode) {
+    pnm <- pnm |> 
+      gsub(pattern = 'alpha', replacement = '\u03b1') |>
+      gsub(pattern = 'lambda', replacement = '\u03bb') |>
+      gsub(pattern = 'nu', replacement = '\u03bd') |>
+      gsub(pattern = 'xi', replacement = '\u03be') |>
+      gsub(pattern = 'omega', replacement = '\u03c9')
+  }
 
-  vapply(unname(x), FUN = function(i) {
-    paste0(sprintf(fmt = '%s = %.3g', pnm, i), collapse = '\n')
-  }, FUN.VALUE = NA_character_)
+  ret <- seq_along(x)
+  attr(ret, which = 'levels') <- x |>
+    unname() |>
+    vapply(FUN = \(i) {
+      sprintf(fmt = '%s = %.3g', pnm, i) |>
+        paste0(collapse = '\n')
+    }, FUN.VALUE = NA_character_)
+  class(ret) <- 'factor'
+  return(ret)
 
 }
 

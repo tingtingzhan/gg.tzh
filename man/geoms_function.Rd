@@ -37,7 +37,7 @@ Another good choice is \code{c('colour', 'linetype')}, i.e., parameters are disc
 Also see parameter \code{params} of function \link[ggplot2]{layer}}
 }
 \value{
-Function \link{geoms_function} returns a \link[base]{list} of
+Function \code{\link[=geoms_function]{geoms_function()}} returns a \link[base]{list} of
 \link[ggplot2]{geom_function}
 \link[ggplot2]{layer}s.
 }
@@ -82,4 +82,5 @@ ggplot() +
  xlim(-5,5)
 # but the order of labels are wrong 
 # .. i.e., automatically alphabetical, not what we want
+
 }

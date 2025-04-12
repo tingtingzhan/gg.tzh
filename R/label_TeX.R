@@ -40,7 +40,7 @@
 label_TeX <- function(labels, ...) {
   if (!is.data.frame(labels)) stop('ggplot2 package updated?')
   lab0 <- lapply(as.list.data.frame(labels), FUN = as.character)
-  lab1 <- lapply(lab0, FUN = function(i) as.character(TeX(i)))
+  lab1 <- lapply(lab0, FUN = \(i) as.character(TeX(i)))
   if (identical(lab0, lab1)) return(lab1) # i.e., no TeX symbol
   label_parsed(lab1, ...)
 }

@@ -4,14 +4,17 @@
 \alias{getval_}
 \title{Values of Argument List}
 \usage{
-getval_(x)
+getval_(x, use_unicode = getOption("use_unicode"))
 }
 \arguments{
 \item{x}{..}
+
+\item{use_unicode}{\link[base]{logical} scalar}
 }
 \value{
-Function \link{getval_} returns a \link[base]{character} \link[base]{vector}.
+Function \code{\link[=getval_]{getval_()}} returns a \link[base]{character} \link[base]{vector}.
 }
 \description{
 ..
 }
+\keyword{internal}
