@@ -39,7 +39,7 @@
 #'   caption = 'Illustration showing mean-ratio = .77 (Treatment vs. Control)')
 #'  
 #' @importFrom ggplot2 ggplot aes geom_point scale_x_continuous scale_y_continuous labs
-#' @importFrom geomtextpath geom_textpath
+#' @importFrom geomtextpath geom_textpath GeomTextpath
 #' @importFrom rlang .data
 #' @importFrom scales label_percent
 #' @export

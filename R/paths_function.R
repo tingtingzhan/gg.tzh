@@ -71,7 +71,7 @@
 #'  xlim(-5,5)
 #'
 #' @importFrom ggplot2 stat_function
-#' @importFrom geomtextpath geom_textpath
+#' @importFrom geomtextpath GeomTextpath
 #' @importFrom stats setNames
 #' @export
 paths_function <- function(
