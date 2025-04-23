@@ -26,7 +26,7 @@
 #' 
 #' @param hjust \link[base]{double} scalar or \link[base]{vector}
 #' 
-#' @param parse ..
+#' @param parse \link[base]{logical} scalar
 #' 
 #' @param aes_ \link[base]{character} scalar or \link[base]{vector},
 #' \link[ggplot2]{aes}thetic mapping(s) to be activated. 
@@ -57,23 +57,9 @@
 #' 
 #' ggplot() + paths_function(dt, dots = list(df=c(1,2,5,Inf)), size = 2.5) + xlim(-4,4)
 #' ggplot() + paths_function(dchisq, dots = list(df = c(1,3,5,10)), 
-#'   hjust = c(.2, .25, .5, .55), size = 3) + xlim(.2,8)
+#'   hjust = c(.2,.25,.5,.55), size = 3) + xlim(.2,8)
 #' ggplot() + paths_function(dgamma, dots = list(shape = 1:4), hjust = .15, size = 3) + xlim(0,5)
 #' 
-#' # developer's use
-#' ggplot() + paths_function(dnorm, args = list(
-#'  list(mean=0, sd=1), 
-#'  list(mean=1, sd=1.3)
-#' ), label = c('beta', 'alpha'), parse = TRUE) + xlim(-5,5)
-#' 
-#' # manually, without function [paths_function()]
-#' ggplot() + 
-#'  stat_function(geom = 'textpath', fun = dnorm, args = list(mean=0, sd=1), 
-#'   mapping = aes(color = '1'), label = 'a', show.legend = FALSE) +
-#'  stat_function(geom = 'textpath', fun = dnorm, args = list(mean=1, sd=1.3), 
-#'   mapping = aes(color = '2'), label = 'b', show.legend = FALSE) +
-#'  xlim(-5,5)
-#'
 #' @importFrom ggplot2 stat_function
 #' @importFrom geomtextpath GeomTextpath
 #' @importFrom stats setNames
@@ -103,7 +89,6 @@ paths_function <- function(
   
   if (is.character(label)) {
     # do nothing
-    # .. allow (anyDuplicated(label))
   } else if (is.expression(label)) {
     # do nothing
   } else sprintf(fmt = '%s `label` not supported', sQuote(class(label)[1L])) |> stop()
@@ -128,8 +113,8 @@ paths_function <- function(
     dots = list(
       mapping = mp, 
       args = args,
-      label = label, # may be recycled!
-      hjust = hjust # may be recycled!
+      label = label, # recycled
+      hjust = hjust # recycled
     ), 
     MoreArgs = list(
       fun = fun, 
