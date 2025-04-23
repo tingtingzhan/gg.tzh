@@ -12,7 +12,7 @@ getval_(x, use_unicode = getOption("use_unicode"))
 \item{use_unicode}{\link[base]{logical} scalar}
 }
 \value{
-Function \code{\link[=getval_]{getval_()}} returns a \link[base]{character} \link[base]{vector}.
+Function \code{\link[=getval_]{getval_()}} returns a \link[base]{character} scalar.
 }
 \description{
 ..

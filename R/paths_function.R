@@ -78,7 +78,8 @@ paths_function <- function(
     fun, 
     dots = list(),
     args = dots |> .mapply(FUN = list, MoreArgs = NULL),
-    label = getval_(args),
+    #label = getval_OLD(args),
+    label = args |> vapply(FUN = getval_, FUN.VALUE = ''),
     parse = is.expression(label),
     aes_ = 'colour', 
     #aes_ = c('colour', 'linetype'),
@@ -146,33 +147,26 @@ paths_function <- function(
 #' @param use_unicode \link[base]{logical} scalar
 #' 
 #' @returns 
-#' Function [getval_()] returns a \link[base]{character} \link[base]{vector}.
+#' Function [getval_()] returns a \link[base]{character} scalar.
 #' 
 #' @keywords internal
 #' @export
 getval_ <- function(x, use_unicode = getOption('use_unicode')) {
   
-  x <- lapply(x, FUN = as.list) # already ?base::is.list, does not matter
+  x <- x |> as.list() # already ?base::is.list, does not matter
   
-  pnms <- lapply(x, FUN = names)
-  if (!all(duplicated.default(pnms)[-1L])) stop('parameter names must be all-equal')
-  
-  pnm <- pnms[[1L]]
   if (use_unicode) {
-    pnm <- pnm |> 
+    names(x) <- x |> 
+      names() |> 
       gsub(pattern = 'alpha', replacement = '\u03b1') |>
       gsub(pattern = 'lambda', replacement = '\u03bb') |>
       gsub(pattern = 'nu', replacement = '\u03bd') |>
       gsub(pattern = 'xi', replacement = '\u03be') |>
       gsub(pattern = 'omega', replacement = '\u03c9')
   }
-
-  x |>
-    vapply(FUN = \(i) {
-      sprintf(fmt = '%s = %.3g', pnm, i) |>
-        #paste0(collapse = '\n')
-        paste0(collapse = '; ')
-    }, FUN.VALUE = NA_character_)
+  
+  sprintf(fmt = '%s = %.3g', names(x), x) |>
+    paste0(collapse = '; ')
   
 }
 

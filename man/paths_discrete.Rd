@@ -8,7 +8,7 @@ paths_discrete(
   fun,
   dots = list(),
   args = .mapply(dots, FUN = list, MoreArgs = NULL),
-  label = getval_(args),
+  label = vapply(args, FUN = getval_, FUN.VALUE = ""),
   xlim = stop("must provide `xlim` explicitly"),
   ...
 )
