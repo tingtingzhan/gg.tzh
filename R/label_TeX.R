@@ -16,7 +16,7 @@
 #' 
 #' @returns
 #' 
-#' Function [label_TeX] returns the same object returned by \link[ggplot2]{label_parsed}.
+#' Function [label_TeX()] returns the same object returned by \link[ggplot2]{label_parsed}.
 #' 
 #' @examples
 #' tex_lab = c('$\\hat{alpha}$', '$\\bar{beta}$')

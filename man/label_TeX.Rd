@@ -13,7 +13,7 @@ see details in the documentation \link[ggplot2]{labellers}}
 \item{...}{additional parameters of function \link[ggplot2]{label_parsed}}
 }
 \value{
-Function \link{label_TeX} returns the same object returned by \link[ggplot2]{label_parsed}.
+Function \code{\link[=label_TeX]{label_TeX()}} returns the same object returned by \link[ggplot2]{label_parsed}.
 }
 \description{
 A new member of the \link[ggplot2]{ggplot} \link[ggplot2]{labellers}

@@ -8,7 +8,8 @@ geoms_function(
   fun,
   dots = list(),
   args = split_list_(dots),
-  labels = getval_(args),
+  label = getval_(args),
+  parse = is.expression(label),
   aes_ = "colour",
   ...
 )
@@ -25,8 +26,10 @@ e.g., \code{list(a=list(mean=0, sd=1), b=list(mean=0, sd=2))}
 for two normal distributions
 \eqn{N(0,1)} and \eqn{N(0,2)} labeled as \code{'a'} and \code{'b'}, respectively}
 
-\item{labels}{\link[base]{character} \link[base]{vector},
+\item{label}{\link[base]{character} \link[base]{vector},
 user-friendly text description of the parameters}
+
+\item{parse}{..}
 
 \item{aes_}{\link[base]{character} scalar or \link[base]{vector},
 \link[ggplot2]{aes}thetic mapping(s) to be activated.
@@ -47,40 +50,35 @@ Multiple function \emph{\strong{geom}}etric objects
 with different parameters.
 }
 \examples{
-theme_set(theme(
- legend.position = 'inside',
- legend.position.inside = c(.15, .6),
- legend.key.spacing.y = grid::unit(.01, units = 'npc'),
- legend.background = element_rect(color = 'grey95')
-))
+library(latex2exp)
 
 ggplot() + geom_function(fun = dnorm, args = list(mean=0, sd=1)) + xlim(-3,3)
+
 ggplot() + geoms_function(dnorm, dots = list(mean=1:0), 
-  labels = latex2exp::TeX(c('$mu_1=1$', '$mu_0=0$')), aes_ = c('colour','linetype')) + xlim(-3,4)
-ggplot() + geoms_function(dnorm, dots = list(mean=0, sd=c(1,1.3)), n=501L) + xlim(-5,5)
+  label = TeX(c('$mu_1=1$', '$mu_0=0$'))) + xlim(-3,4)
+
+ggplot() + geoms_function(dnorm, dots = list(mean=0, sd=c(1,1.3)), n=501L, size=2) + xlim(-5,5)
 ggplot() + geoms_function(dnorm, dots=list(mean=0:1, sd=c(1,.9)), 
-  labels = letters[1:2], aes_ = 'linetype') + xlim(-5,5)
-ggplot() + geoms_function(dt, dots = list(df=c(1,2,5,Inf))) + 
-  xlim(-4,4)
-ggplot() + geoms_function(dchisq, dots = list(df=c(1,3,5,10))) + 
-  xlim(0,5) + ylim(0,1) + theme(legend.position.inside = c(.6,.6)) 
-ggplot() + geoms_function(dgamma, dots = list(shape=1:4)) + 
-  xlim(0,5) + theme(legend.position.inside = c(.8,.6))
+  label = letters[1:2], aes_ = c('color', 'linetype')) + xlim(-5,5)
+ggplot() + geoms_function(dt, dots = list(df=c(1,2,5,Inf)), size = 2.5) + xlim(-4,4)
+ggplot() + geoms_function(dchisq, dots = list(df = c(1,3,5,10)), size = 2) + xlim(.2,8)
+ggplot() + geoms_function(dgamma, dots = list(shape = 1:4), size = 2) + xlim(0,5)
 
 # developer's use
 ggplot() + geoms_function(dnorm, args = list(
  list(mean=0, sd=1), 
  list(mean=1, sd=1.3)
-), labels = c('beta', 'alpha')) + xlim(-5,5)
+), label = c('beta', 'alpha'), parse = TRUE) + xlim(-5,5)
 
-# manually, without function [geoms_function]
+# manually, without function [geoms_function()]
+library(geomtextpath)
 ggplot() + 
- geom_function(fun = dnorm, args = list(mean=0, sd=1), 
-  mapping = aes(color = 'beta')) +
- geom_function(fun = dnorm, args = list(mean=1, sd=1.3), 
-  mapping = aes(color = 'alpha')) +
+ stat_function(geom = 'textpath', fun = dnorm, args = list(mean=0, sd=1), 
+  mapping = aes(color = '1'), label = 'beta', 
+  parse = TRUE, show.legend = FALSE) +
+ stat_function(geom = 'textpath', fun = dnorm, args = list(mean=1, sd=1.3), 
+  mapping = aes(color = '2'), label = 'alpha', 
+  parse = TRUE, show.legend = FALSE) +
  xlim(-5,5)
-# but the order of labels are wrong 
-# .. i.e., automatically alphabetical, not what we want
 
 }
