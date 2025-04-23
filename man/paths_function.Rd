@@ -9,6 +9,7 @@ paths_function(
   dots = list(),
   args = .mapply(dots, FUN = list, MoreArgs = NULL),
   label,
+  hjust = 0.5,
   parse = is.expression(label),
   aes_ = "colour",
   ...
@@ -28,6 +29,8 @@ for two normal distributions
 
 \item{label}{\link[base]{character} \link[base]{vector},
 user-friendly text description of the parameters}
+
+\item{hjust}{\link[base]{double} scalar or \link[base]{vector}}
 
 \item{parse}{..}
 
@@ -62,8 +65,9 @@ ggplot() + paths_function(
 ) + xlim(-5, 5)
 
 ggplot() + paths_function(dt, dots = list(df=c(1,2,5,Inf)), size = 2.5) + xlim(-4,4)
-ggplot() + paths_function(dchisq, dots = list(df = c(1,3,5,10)), size = 2) + xlim(.2,8)
-ggplot() + paths_function(dgamma, dots = list(shape = 1:4), size = 2) + xlim(0,5)
+ggplot() + paths_function(dchisq, dots = list(df = c(1,3,5,10)), 
+  hjust = c(.2, .25, .5, .55), size = 3) + xlim(.2,8)
+ggplot() + paths_function(dgamma, dots = list(shape = 1:4), hjust = .15, size = 3) + xlim(0,5)
 
 # developer's use
 ggplot() + paths_function(dnorm, args = list(

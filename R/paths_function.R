@@ -24,6 +24,8 @@
 #' @param label \link[base]{character} \link[base]{vector},
 #' user-friendly text description of the parameters
 #' 
+#' @param hjust \link[base]{double} scalar or \link[base]{vector}
+#' 
 #' @param parse ..
 #' 
 #' @param aes_ \link[base]{character} scalar or \link[base]{vector},
@@ -52,8 +54,9 @@
 #' ) + xlim(-5, 5)
 #' 
 #' ggplot() + paths_function(dt, dots = list(df=c(1,2,5,Inf)), size = 2.5) + xlim(-4,4)
-#' ggplot() + paths_function(dchisq, dots = list(df = c(1,3,5,10)), size = 2) + xlim(.2,8)
-#' ggplot() + paths_function(dgamma, dots = list(shape = 1:4), size = 2) + xlim(0,5)
+#' ggplot() + paths_function(dchisq, dots = list(df = c(1,3,5,10)), 
+#'   hjust = c(.2, .25, .5, .55), size = 3) + xlim(.2,8)
+#' ggplot() + paths_function(dgamma, dots = list(shape = 1:4), hjust = .15, size = 3) + xlim(0,5)
 #' 
 #' # developer's use
 #' ggplot() + paths_function(dnorm, args = list(
@@ -78,6 +81,7 @@ paths_function <- function(
     dots = list(),
     args = dots |> .mapply(FUN = list, MoreArgs = NULL),
     label,
+    hjust = .5, # seems like the default in \pkg{geomtextpath}; not sure which function!!! 
     parse = is.expression(label),
     aes_ = 'colour', 
     #aes_ = c('colour', 'linetype'),
@@ -122,7 +126,8 @@ paths_function <- function(
     dots = list(
       mapping = mp, 
       args = args,
-      label = label # may be recycled!
+      label = label, # may be recycled!
+      hjust = hjust # may be recycled!
     ), 
     MoreArgs = list(
       fun = fun, 
@@ -160,6 +165,7 @@ getval_ <- function(x) {
   }
   
   sprintf(fmt = '%s = %.3g', nm, x) |>
+    sub(pattern = '([-]?)0[.]', replacement = '\\1.') |> # remove leading zero
     paste0(collapse = '; ')
   
 }
