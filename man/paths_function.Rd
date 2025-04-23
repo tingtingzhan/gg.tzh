@@ -7,7 +7,7 @@
 paths_function(
   fun,
   dots = list(),
-  args = split_list_(dots),
+  args = .mapply(dots, FUN = list, MoreArgs = NULL),
   label = getval_(args),
   parse = is.expression(label),
   aes_ = "colour",

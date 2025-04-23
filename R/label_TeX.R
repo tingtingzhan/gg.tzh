@@ -38,10 +38,23 @@
 #' @importFrom latex2exp TeX
 #' @export
 label_TeX <- function(labels, ...) {
+  
   if (!is.data.frame(labels)) stop('ggplot2 package updated?')
-  lab0 <- lapply(as.list.data.frame(labels), FUN = as.character)
-  lab1 <- lapply(lab0, FUN = \(i) as.character(TeX(i)))
+  
+  lab0 <- labels |> 
+    as.list.data.frame() |> 
+    lapply(FUN = as.character)
+  
+  lab1 <- lab0 |>
+    lapply(FUN = \(i) {
+      i |> 
+        TeX() |> 
+        as.character()
+    })
+  
   if (identical(lab0, lab1)) return(lab1) # i.e., no TeX symbol
+  
   label_parsed(lab1, ...)
+  
 }
 

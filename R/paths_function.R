@@ -77,7 +77,7 @@
 paths_function <- function(
     fun, 
     dots = list(),
-    args = split_list_(dots),
+    args = dots |> .mapply(FUN = list, MoreArgs = NULL),
     label = getval_(args),
     parse = is.expression(label),
     aes_ = 'colour', 
@@ -135,42 +135,6 @@ paths_function <- function(
 
 
 
-#' @title Re-organize a \link[base]{list} of Arguments
-#' 
-#' @description ..
-#' 
-#' @param x \link[base]{list} of \link[base]{vector}s
-#' 
-#' @returns 
-#' Function [split_list_()] returns a \link[base]{list}.
-#' 
-#' @examples 
-#' list(mean = 1:2) |> split_list_() |> getval_()
-#' list(mean = c(exp(1), pi), sd = 1:2) |> split_list_() |> getval_()
-#' list(df1 = 1, df2 = c(2, 3), ncp = c(.1, .2)) |> split_list_() |> getval_()
-#' @keywords internal
-#' @export
-split_list_ <- function(x) {
-  
-  if (!length(nm <- names(x)) || !all(nzchar(nm))) stop('all elements must be named')
-  if (!identical(make.names(nm), nm)) stop('some element names are illegal')
-  
-  d <- x |>
-    as.data.frame.list() 
-  # .. recycle length
-  # .. (no longer used) the *1st* named element of `x` will provide row.names of `d`
-  
-  # essentially base::split.data.frame by individual rows
-  d |>
-    .row_names_info(type = 2L) |> 
-    seq_len() |>
-    lapply(FUN = \(i) {
-      d[i, , drop = FALSE] |> 
-        as.list.data.frame()
-    })
-  
-}
-
 
 #' @title Values of Argument List
 #' 
@@ -188,7 +152,6 @@ split_list_ <- function(x) {
 #' @export
 getval_ <- function(x, use_unicode = getOption('use_unicode')) {
   
-  # `x` is return of [split_list_()]
   x <- lapply(x, FUN = as.list) # already ?base::is.list, does not matter
   
   pnms <- lapply(x, FUN = names)

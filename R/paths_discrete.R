@@ -46,7 +46,7 @@
 paths_discrete <- function(
     fun, 
     dots = list(),
-    args = split_list_(dots),
+    args = dots |> .mapply(FUN = list, MoreArgs = NULL),
     label = getval_(args),
     xlim = stop('must provide `xlim` explicitly'),
     ...
