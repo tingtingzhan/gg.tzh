@@ -12,15 +12,14 @@
 #' 
 #' @param fun a continuous \link[base]{function}, see usage in function \link[ggplot2]{stat_function}
 #' 
-#' @param dots \link[base]{list} of parameters in a user-friendly manner,
+#' @param dots user-friendly \link[base]{list} of parameters,
 #' e.g., `list(mean=0, sd=1:2)` for two normal distributions
 #' \eqn{N(0,1)} and \eqn{N(0,2)}
 #' 
-#' 
 #' @param args \link[base]{list} of parameters in a programmer-friendly manner,
-#' e.g., `list(a=list(mean=0, sd=1), b=list(mean=0, sd=2))`
+#' e.g., `list(list(mean=0, sd=1), list(mean=0, sd=2))`
 #' for two normal distributions
-#' \eqn{N(0,1)} and \eqn{N(0,2)} labeled as `'a'` and `'b'`, respectively
+#' \eqn{N(0,1)} and \eqn{N(0,2)}
 #' 
 #' @param label \link[base]{character} \link[base]{vector},
 #' user-friendly text description of the parameters
@@ -78,8 +77,7 @@ paths_function <- function(
     fun, 
     dots = list(),
     args = dots |> .mapply(FUN = list, MoreArgs = NULL),
-    #label = getval_OLD(args),
-    label = args |> vapply(FUN = getval_, FUN.VALUE = ''),
+    label,
     parse = is.expression(label),
     aes_ = 'colour', 
     #aes_ = c('colour', 'linetype'),
@@ -88,9 +86,13 @@ paths_function <- function(
   
   if (!is.function(fun)) stop('input must be \'function\'')
   
-  if (missing(args)) {
-    if (!length(dots)) .Defunct(new = 'use ggplot2::stat_function')
-    force(args) 
+  if (!length(args)) stop('no `args` provided')
+  
+  if (missing(label)) {
+    # do not want un-exported function [getval_()] show in use-interface
+    label <- args |> 
+      unname() |>
+      vapply(FUN = getval_, FUN.VALUE = '')
   }
   
   if (is.character(label)) {
@@ -100,24 +102,27 @@ paths_function <- function(
     # do nothing
   } else sprintf(fmt = '%s `label` not supported', sQuote(class(label)[1L])) |> stop()
   
-  mp <- args |>
+  force(parse) # before converting `label` to 'character'
+ 
+  label <- label |> as.character() # must for expression!
+  
+  mp <- args |> # `args` should be the longest (`label` may be recycled) 
     seq_along() |>
+    sprintf(fmt = '%02d') |> # so that '10' is after '09'
     lapply(FUN = \(i) {
       i |> 
+        list() |>
         rep(times = length(aes_)) |> 
-        as.character() |> 
-        as.list() |>
         setNames(nm = aes_) |>
         do.call(what = 'aes')
     })
   
-  # return below
-  .mapply(
+  lyr <- .mapply(
     FUN = stat_function, 
     dots = list(
       mapping = mp, 
       args = args,
-      label = label |> as.character() # must for expression!
+      label = label # may be recycled!
     ), 
     MoreArgs = list(
       fun = fun, 
@@ -128,36 +133,25 @@ paths_function <- function(
     )
   )
   
+  return(c(lyr, list(
+    labs(
+      y = fun |> substitute() |> deparse1()
+    )
+  )))
+  
 }
 
 
 
 
 
-
-
-
-#' @title Values of Argument List
-#' 
-#' @description
-#' ..
-#' 
-#' @param x ..
-#' 
-#' @param use_unicode \link[base]{logical} scalar
-#' 
-#' @returns 
-#' Function [getval_()] returns a \link[base]{character} scalar.
-#' 
-#' @keywords internal
-#' @export
-getval_ <- function(x, use_unicode = getOption('use_unicode')) {
+getval_ <- function(x) {
   
-  x <- x |> as.list() # already ?base::is.list, does not matter
+  nm <- x |> 
+    names()
   
-  if (use_unicode) {
-    names(x) <- x |> 
-      names() |> 
+  if (getOption('use_unicode')) {
+    nm <- nm |> 
       gsub(pattern = 'alpha', replacement = '\u03b1') |>
       gsub(pattern = 'lambda', replacement = '\u03bb') |>
       gsub(pattern = 'nu', replacement = '\u03bd') |>
@@ -165,7 +159,7 @@ getval_ <- function(x, use_unicode = getOption('use_unicode')) {
       gsub(pattern = 'omega', replacement = '\u03c9')
   }
   
-  sprintf(fmt = '%s = %.3g', names(x), x) |>
+  sprintf(fmt = '%s = %.3g', nm, x) |>
     paste0(collapse = '; ')
   
 }

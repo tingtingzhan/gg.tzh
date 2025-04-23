@@ -8,7 +8,7 @@ paths_discrete(
   fun,
   dots = list(),
   args = .mapply(dots, FUN = list, MoreArgs = NULL),
-  label = vapply(args, FUN = getval_, FUN.VALUE = ""),
+  label,
   xlim = stop("must provide `xlim` explicitly"),
   ...
 )
@@ -46,10 +46,11 @@ ggplot() + paths_discrete(dpois, dots = list(lambda = 1), xlim = 0:6)
 
 ggplot() + paths_discrete(dnbinom, dots = list(size = 5.2, prob = c(.5, .4)), xlim = 0:15)
 
-ggplot() + paths_discrete(dpois, dots = list(lambda = c(1, 1.3)), label = c('Treatment', 'Control'), 
- xlim = 0:4) +
- labs(x = 'Number of Re-Admissions', y = 'Conditional Probabilities', 
-  fill = 'Poisson\nDistribution',
-  caption = 'Illustration showing mean-ratio = .77 (Treatment vs. Control)')
+ggplot() + paths_discrete(
+ fun = dpois, dots = list(lambda = c(1, 1.3)), 
+ label = c('Treatment', 'Control'), xlim = 0:4
+) + labs(
+ x = 'Number of Re-Admissions', y = 'Conditional Probabilities', 
+ caption = 'Illustration showing mean-ratio = .77 (Treatment vs. Control)')
  
 }

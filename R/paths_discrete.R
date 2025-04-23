@@ -32,11 +32,12 @@
 #' 
 #' ggplot() + paths_discrete(dnbinom, dots = list(size = 5.2, prob = c(.5, .4)), xlim = 0:15)
 #' 
-#' ggplot() + paths_discrete(dpois, dots = list(lambda = c(1, 1.3)), label = c('Treatment', 'Control'), 
-#'  xlim = 0:4) +
-#'  labs(x = 'Number of Re-Admissions', y = 'Conditional Probabilities', 
-#'   fill = 'Poisson\nDistribution',
-#'   caption = 'Illustration showing mean-ratio = .77 (Treatment vs. Control)')
+#' ggplot() + paths_discrete(
+#'  fun = dpois, dots = list(lambda = c(1, 1.3)), 
+#'  label = c('Treatment', 'Control'), xlim = 0:4
+#' ) + labs(
+#'  x = 'Number of Re-Admissions', y = 'Conditional Probabilities', 
+#'  caption = 'Illustration showing mean-ratio = .77 (Treatment vs. Control)')
 #'  
 #' @importFrom ggplot2 ggplot aes geom_point scale_x_continuous scale_y_continuous labs
 #' @importFrom geomtextpath geom_textpath GeomTextpath
@@ -47,13 +48,20 @@ paths_discrete <- function(
     fun, 
     dots = list(),
     args = dots |> .mapply(FUN = list, MoreArgs = NULL),
-    label = args |> vapply(FUN = getval_, FUN.VALUE = ''),
+    label,
     xlim = stop('must provide `xlim` explicitly'),
     ...
 ) {
   
   if (!is.integer(xlim) || !length(xlim) || anyNA(xlim)) stop('`xlim` must be integer')
   if (any(xlim < 0L)) stop('`xlim` must be non-negative')
+  
+  if (missing(label)) {
+    # do not want un-exported function [getval_()] show in use-interface
+    label <- args |> 
+      unname() |>
+      vapply(FUN = getval_, FUN.VALUE = '')
+  }
   
   xs <- if (length(xlim) == 1L) {
     if (xlim == 0L) stop('upper end of `xlim` needs to be positive')
@@ -81,9 +89,13 @@ paths_discrete <- function(
     
     geom_textpath(data = aes_d_, mapping = mp, show.legend = FALSE, ...),
     
-    scale_x_continuous(name = NULL, breaks = xs), # all (integer) `x` values printed
+    scale_x_continuous(breaks = xs), # all (integer) `x` values printed
       
-    scale_y_continuous(name = deparse1(substitute(fun)), labels = label_percent())
+    scale_y_continuous(labels = label_percent()),
+    
+    labs(x = NULL, y = deparse1(substitute(fun)))
+    # write individual ?ggplot2::labs, instead of `name` in scale_*_continuous
+    # otherwise later user cannot use ?ggplot2::labs to overwrite (do not understand why..)
     
   ))
   

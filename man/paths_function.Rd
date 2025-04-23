@@ -8,7 +8,7 @@ paths_function(
   fun,
   dots = list(),
   args = .mapply(dots, FUN = list, MoreArgs = NULL),
-  label = vapply(args, FUN = getval_, FUN.VALUE = ""),
+  label,
   parse = is.expression(label),
   aes_ = "colour",
   ...
@@ -17,14 +17,14 @@ paths_function(
 \arguments{
 \item{fun}{a continuous \link[base]{function}, see usage in function \link[ggplot2]{stat_function}}
 
-\item{dots}{\link[base]{list} of parameters in a user-friendly manner,
+\item{dots}{user-friendly \link[base]{list} of parameters,
 e.g., \code{list(mean=0, sd=1:2)} for two normal distributions
 \eqn{N(0,1)} and \eqn{N(0,2)}}
 
 \item{args}{\link[base]{list} of parameters in a programmer-friendly manner,
-e.g., \code{list(a=list(mean=0, sd=1), b=list(mean=0, sd=2))}
+e.g., \code{list(list(mean=0, sd=1), list(mean=0, sd=2))}
 for two normal distributions
-\eqn{N(0,1)} and \eqn{N(0,2)} labeled as \code{'a'} and \code{'b'}, respectively}
+\eqn{N(0,1)} and \eqn{N(0,2)}}
 
 \item{label}{\link[base]{character} \link[base]{vector},
 user-friendly text description of the parameters}
