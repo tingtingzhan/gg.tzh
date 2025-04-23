@@ -152,11 +152,13 @@ paths_function <- function(
 
 getval_ <- function(x) {
   
-  nm <- x |> 
-    names()
+  ret <- sprintf(fmt = '%s = %.3g', names(x), x) |>
+    sub(pattern = '([-]?)0[.]', replacement = '\\1.') |> # remove leading zero
+    paste0(collapse = '; ')
   
   if (getOption('use_unicode')) {
-    nm <- nm |> 
+    ret <- ret |> 
+      gsub(pattern = 'Inf', replacement = '\u221e') |>
       gsub(pattern = 'alpha', replacement = '\u03b1') |>
       gsub(pattern = 'lambda', replacement = '\u03bb') |>
       gsub(pattern = 'nu', replacement = '\u03bd') |>
@@ -164,9 +166,7 @@ getval_ <- function(x) {
       gsub(pattern = 'omega', replacement = '\u03c9')
   }
   
-  sprintf(fmt = '%s = %.3g', nm, x) |>
-    sub(pattern = '([-]?)0[.]', replacement = '\\1.') |> # remove leading zero
-    paste0(collapse = '; ')
+  return(ret)
   
 }
 
