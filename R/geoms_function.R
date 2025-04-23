@@ -123,7 +123,7 @@ geoms_function <- function(
       label = label |> as.character() # must for expression!
     ), MoreArgs = list(
       fun = fun, 
-      geom = 'textpath', 
+      geom = 'textpath', # must Depends geomtextpath; Imports does not work. why??
       show.legend = FALSE, 
       parse = parse,
       ...
