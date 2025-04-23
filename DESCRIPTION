@@ -6,7 +6,7 @@ Date: 2025-04-12
 Description: Tingting's Extension of ggplot2.
 License: GPL-2
 Encoding: UTF-8
-Imports: latex2exp
+Imports: latex2exp, rlang, scales
 Authors@R: c(person(given = "Tingting", family =
      "Zhan", role = c("aut", "cre"), email =
      "tingtingzhan@gmail.com", comment =
