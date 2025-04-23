@@ -26,7 +26,7 @@
 #' Be aware of potential name clash with function `ggpubr::ggbarplot`.
 #' 
 #' @examples 
-#' options(use_unicode = FALSE)
+#' options(use_unicode = FALSE) # CRAN requirement
 #' 
 #' ggplot() + paths_discrete(dpois, dots = list(lambda = 1), xlim = 0:6)
 #' 

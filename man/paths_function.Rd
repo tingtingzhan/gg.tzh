@@ -52,6 +52,8 @@ Multiple function \emph{\strong{geom}}etric objects
 with different parameters.
 }
 \examples{
+options(use_unicode = FALSE) # CRAN requirement
+
 library(latex2exp)
 
 ggplot() + stat_function(fun = dnorm, args = list(mean=0, sd=1)) + xlim(-3,3)
