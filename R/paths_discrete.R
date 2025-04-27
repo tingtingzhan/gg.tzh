@@ -26,12 +26,6 @@
 #' Be aware of potential name clash with function `ggpubr::ggbarplot`.
 #' 
 #' @examples 
-#' options(use_unicode = FALSE) # CRAN requirement
-#' 
-#' ggplot() + paths_discrete(dpois, dots = list(lambda = 1), xlim = 0:6)
-#' 
-#' ggplot() + paths_discrete(dnbinom, dots = list(size = 5.2, prob = c(.5, .4)), xlim = 0:15)
-#' 
 #' ggplot() + paths_discrete(
 #'  fun = dpois, dots = list(lambda = c(1, 1.3)), 
 #'  label = c('Treatment', 'Control'), xlim = 0:4

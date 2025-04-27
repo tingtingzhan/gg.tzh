@@ -40,26 +40,16 @@
 #' Function [paths_function()] returns a \link[base]{list} of 
 #' \link[ggplot2]{layer}s.
 #' 
-#' @examples 
-#' options(use_unicode = FALSE) # CRAN requirement
-#' 
+#' @examples
 #' library(latex2exp)
+#' ggplot() + 
+#'  paths_function(
+#'   fun = dnorm, dots = list(mean = 1:0), hjust = .4,
+#'   label = TeX(c('$mu_1=1$', '$mu_0=0$')) # bug; prefer unicode
+#'  ) + 
+#'  xlim(-3, 4)
 #' 
-#' ggplot() + stat_function(fun = dnorm, args = list(mean=0, sd=1)) + xlim(-3,3)
-#' 
-#' ggplot() + paths_function(dnorm, dots = list(mean=1:0), 
-#'   label = TeX(c('$mu_1=1$', '$mu_0=0$'))) + xlim(-3,4)
-#' 
-#' ggplot() + paths_function(
-#'   fun = dnorm, dots = list(mean = 0, sd = c(1, 1.3)), 
-#'   aes_ = c('color', 'linetype'), size = 2
-#' ) + xlim(-5, 5)
-#' 
-#' ggplot() + paths_function(dt, dots = list(df=c(1,2,5,Inf)), size = 2.5) + xlim(-4,4)
-#' ggplot() + paths_function(dchisq, dots = list(df = c(1,3,5,10)), 
-#'   hjust = c(.2,.25,.5,.55), size = 3) + xlim(.2,8)
-#' ggplot() + paths_function(dgamma, dots = list(shape = 1:4), hjust = .15, size = 3) + xlim(0,5)
-#' 
+#' @keywords internal
 #' @importFrom ggplot2 stat_function
 #' @importFrom geomtextpath GeomTextpath
 #' @importFrom stats setNames
