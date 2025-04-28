@@ -41,6 +41,8 @@
 #' \link[ggplot2]{layer}s.
 #' 
 #' @examples
+#' library(ggplot2)
+#' library(geomtextpath)
 #' library(latex2exp)
 #' ggplot() + 
 #'  paths_function(
@@ -51,7 +53,7 @@
 #' 
 #' @keywords internal
 #' @importFrom ggplot2 stat_function
-#' @importFrom geomtextpath GeomTextpath
+#' @importFrom geomtextpath textpathGrob GeomTextpath
 #' @importFrom stats setNames
 #' @export
 paths_function <- function(

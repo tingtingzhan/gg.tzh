@@ -52,6 +52,8 @@ Multiple function \emph{\strong{geom}}etric objects
 with different parameters.
 }
 \examples{
+library(ggplot2)
+library(geomtextpath)
 library(latex2exp)
 ggplot() + 
  paths_function(
