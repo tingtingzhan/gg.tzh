@@ -26,6 +26,7 @@
 #' Be aware of potential name clash with function `ggpubr::ggbarplot`.
 #' 
 #' @examples 
+#' library(ggplot2)
 #' ggplot() + paths_discrete(
 #'  fun = dpois, dots = list(lambda = c(1, 1.3)), 
 #'  label = c('Treatment', 'Control'), xlim = 0:4

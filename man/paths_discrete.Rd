@@ -40,6 +40,7 @@ Function \code{\link[=paths_discrete]{paths_discrete()}} returns a \link[base]{l
 Be aware of potential name clash with function \code{ggpubr::ggbarplot}.
 }
 \examples{
+library(ggplot2)
 ggplot() + paths_discrete(
  fun = dpois, dots = list(lambda = c(1, 1.3)), 
  label = c('Treatment', 'Control'), xlim = 0:4
