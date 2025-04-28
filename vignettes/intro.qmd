@@ -30,13 +30,12 @@ Examples in this vignette require that the `search` path has
 
 ```{r}
 library(gg.tzh)
+library(ggplot2)
+library(geomtextpath)
+library(scales)
 library(latex2exp)
 ```
 
-
-```{r}
-(col = scales::pal_hue()(n = 2L))
-```
 
 ```{r}
 #| echo: false
@@ -45,64 +44,22 @@ library(knitr) # for tables in this vignette
 theme_bw() |> theme_set()
 ```
 
-
 ## Terms and Abbreviations
 
 ```{r}
 #| echo: false
 #| results: asis
 c(
-  '[`|>`](https://search.r-project.org/R/refmans/base/html/pipeOp.html)', 'Forward pipe operator introduced in `R` 4.1.0',
+  '[|>](https://search.r-project.org/R/refmans/base/html/pipeOp.html)', 'Forward pipe operator introduced in `R` 4.1.0',
   '`$`', '[Extract](https://search.r-project.org/R/refmans/base/html/Extract.html) parts of an object',
-  '[`abline`](https://search.r-project.org/R/refmans/graphics/html/abline.html)', 'Add straight line (by intercept and slope) to a plot',
-  '[`aov`](https://search.r-project.org/R/refmans/stats/html/aov.html), [`anova`](https://search.r-project.org/R/refmans/stats/html/anova.html)', 'Analysis-of-variance (ANOVA) model; ANOVA table',
-  '[`boxplot`](https://search.r-project.org/R/refmans/graphics/html/boxplot.html)', 'Box plot',
   '`CRAN`, `R`', '[The Comprehensive R Archive Network](https://cran.r-project.org)',
-  '[`chisq.test`](https://search.r-project.org/R/refmans/stats/html/chisq.test.html)', 'Pearson\'s $\\chi^2$-test',
   '[`class`](https://search.r-project.org/R/refmans/base/html/class.html)', 'Object class',
-  '[`confint`](https://search.r-project.org/R/refmans/stats/html/confint.html)', 'Confidence intervals for model parameters',
-  '[`cut`](https://search.r-project.org/R/refmans/base/html/cut.html)', 'Convert numeric to factor',
-  '[`data.frame`](https://search.r-project.org/R/refmans/base/html/data.frame.html)', 'Data frame',
-  '[`dim`](https://search.r-project.org/R/refmans/base/html/dim.html)', 'Dimensions',
   '[`dbinom`, `pbinom`, `qbinom`](https://search.r-project.org/R/refmans/stats/html/Binomial.html)', 'Binomial density, probability, quantile',
   '[`dpois`, `ppois`, `qpois`](https://search.r-project.org/R/refmans/stats/html/Poisson.html)', 'Poisson density, probability, quantile',
   '[`dnorm`, `pnorm`, `qnorm`](https://search.r-project.org/R/refmans/stats/html/Normal.html)', 'Normal density, probability, quantile',
-  '[`exp`](https://search.r-project.org/R/refmans/base/html/Log.html)', 'Exponential',
-  '[`factor`](https://search.r-project.org/R/refmans/base/html/factor.html)', 'Factor',
-  '[`fisher.test`](https://search.r-project.org/R/refmans/stats/html/fisher.test.html)', 'Fisher\'s exact test', 
-  '[`glm`](https://search.r-project.org/R/refmans/stats/html/glm.html)', 'Generalized linear model',
-  '[`head`, `tail`](https://search.r-project.org/R/refmans/utils/html/head.html)', 'First or last parts of an object',
-  '[`kurtosis`](https://search.r-project.org/CRAN/refmans/e1071/html/kurtosis.html)', 'Kurtosis',
   '[`L`](https://adv-r.hadley.nz/vectors-chap.html#atomic-vectors)', '[Integer](https://search.r-project.org/R/refmans/base/html/integer.html) notation',
   '[`label_percent`](https://search.r-project.org/CRAN/refmans/scales/html/label_percent.html)', 'Label for percentages',
-  '[`lm`](https://search.r-project.org/R/refmans/stats/html/lm.html)', 'Linear model',
-  '[`log`](https://search.r-project.org/R/refmans/base/html/Log.html)', 'Logarithm',
-  '[`matrix`](https://search.r-project.org/R/refmans/base/html/matrix.html)', 'Matrices',
-  '[`mean`](https://search.r-project.org/R/refmans/base/html/mean.html)', 'Arithmetic mean',
-  '[`median`](https://search.r-project.org/R/refmans/stats/html/median.html)', 'Median',
-  '[`Mode`](https://search.r-project.org/CRAN/refmans/pracma/html/mode.html)', 'Mode',
-  '[`names`](https://search.r-project.org/R/refmans/base/html/names.html)', 'Names of an object',
-  '[`nrow`](https://search.r-project.org/R/refmans/base/html/nrow.html)', 'Number of rows',
-  '[`ordered`](https://search.r-project.org/R/refmans/base/html/factor.html)', 'Ordered factor',
-  '[`plot`](https://search.r-project.org/R/refmans/base/html/plot.html)', 'Plot',
-  '[`prop.test`](https://search.r-project.org/R/refmans/stats/html/prop.test.html)', 'Pearson\'s $\\chi^2$-test on proportions',
-  '[`quantile`](https://search.r-project.org/R/refmans/stats/html/quantile.html)', 'Quantile',
-  '[`rep`](https://search.r-project.org/R/refmans/base/html/rep.html)', 'Replicate elements',
-  '[`sample`, `sample.int`](https://search.r-project.org/R/refmans/base/html/sample.html)', 'Random samples', 
-  '[`sd`](https://search.r-project.org/R/refmans/stats/html/sd.html)', 'Standard deviation',
-  '[`search`](https://search.r-project.org/R/refmans/base/html/search.html)', 'Search path',
-  '[`seed`, `set.seed`](https://search.r-project.org/R/refmans/base/html/Random.html)', 'Random number generation seed',
-  '[`seq`](https://search.r-project.org/R/refmans/base/html/seq.html)', 'Sequence generation',
-  '[`skewness`](https://search.r-project.org/CRAN/refmans/e1071/html/skewness.html)', 'Skewness',
-  '[`sort`](https://search.r-project.org/R/refmans/base/html/sort.html)', 'Sorting vectors',
-  '[`summary`](https://search.r-project.org/R/refmans/base/html/summary.html)', 'Summaries of an `R` object',
-  '[`t.test`](https://search.r-project.org/R/refmans/stats/html/t.test.html)', 'Student\'s $t$-test',
-  '[`table`](https://search.r-project.org/R/refmans/base/html/table.html)', 'Cross tabulation',
-  '[`uniroot`](https://search.r-project.org/R/refmans/stats/html/uniroot.html)', 'One dimensional root-finding',
-  '[`var`](https://search.r-project.org/R/refmans/stats/html/cor.html)', 'Variance',
-  '[`var.test`](https://search.r-project.org/R/refmans/stats/html/var.test.html)', '$F$-test to compare variances',
-  '[`with`, `within`](https://search.r-project.org/R/refmans/base/html/with.html)', 'Evaluate an expression in a data environment', 
-  '[`xtabs`](https://search.r-project.org/R/refmans/stats/html/xtabs.html)', 'Cross tabulation'
+  '[`search`](https://search.r-project.org/R/refmans/base/html/search.html)', 'Search path'
 ) |>
   matrix(nrow = 2L, dimnames = list(c('Term / Abbreviation', 'Description'), NULL)) |>
   t.default() |>
@@ -114,7 +71,6 @@ c(
 
 ## Normal Distribution
 
-
 ```{r}
 #| fig-width: 5
 #| fig-height: 3
@@ -123,19 +79,20 @@ ggplot() +
   xlim(-3, 4)
 ```
 
-
 ```{r}
 #| fig-width: 5
 #| fig-height: 3
 ggplot() + 
   paths_function(
-    fun = dnorm, dots = list(mean = 0, sd = c(1, 1.3)), 
-    aes_ = c('color', 'linetype'), size = 3
+    fun = pnorm, dots = list(mean = 0, sd = c(1, 2)), 
+    aes_ = c('color', 'linetype'), hjust = .3, size = 3
   ) + 
+  scale_y_continuous(label = label_percent()) +
   xlim(-3, 3)
 ```
 
 ## $t$-Distribution
+
 ```{r}
 #| fig-width: 5
 #| fig-height: 3
@@ -144,8 +101,8 @@ ggplot() +
   xlim(-4,4)
 ```
 
-
 ## $\chi^2$-Distribution
+
 ```{r}
 #| fig-width: 5
 #| fig-height: 3
@@ -178,7 +135,6 @@ ggplot() +
   paths_discrete(dpois, dots = list(lambda = 5:10), hjust = .3, xlim = 20L)
 ```
 
-
 ## Negative Binomial Distribution
 
 ```{r}
@@ -198,23 +154,14 @@ ggplot() +
   )
 ```
 
-
-
 ## Generalized Poisson Distribution
 
 ```{r}
-library(VGAM)
+ggplot() + 
+  paths_discrete(VGAM::dgenpois1, dots = list(meanpar = 1:3), xlim = 10L)
 ```
-
 
 ```{r}
 ggplot() + 
-  paths_discrete(dgenpois1, dots = list(meanpar = 1:3), xlim = 10L)
+  paths_discrete(VGAM::dgenpois1, dots = list(meanpar = 2, dispind = 1:3), xlim = 10L, size = 2L)
 ```
-
-
-```{r}
-ggplot() + 
-  paths_discrete(dgenpois1, dots = list(meanpar = 2, dispind = 1:3), xlim = 10L, size = 2L)
-```
-

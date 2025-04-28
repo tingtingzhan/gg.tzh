@@ -19,6 +19,7 @@
 #' Function [label_TeX()] returns the same object returned by \link[ggplot2]{label_parsed}.
 #' 
 #' @examples
+#' library(ggplot2)
 #' tex_lab = c('$\\hat{alpha}$', '$\\bar{beta}$')
 #' d = data.frame(
 #'   x = c(rnorm(20L, sd = 1), rnorm(20L, mean = 1, sd = 1.5)),

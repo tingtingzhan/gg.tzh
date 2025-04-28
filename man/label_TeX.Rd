@@ -23,6 +23,7 @@ to support \link[latex2exp]{TeX}.
 ..
 }
 \examples{
+library(ggplot2)
 tex_lab = c('$\\\\hat{alpha}$', '$\\\\bar{beta}$')
 d = data.frame(
   x = c(rnorm(20L, sd = 1), rnorm(20L, mean = 1, sd = 1.5)),
