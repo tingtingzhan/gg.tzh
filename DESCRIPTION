@@ -2,7 +2,7 @@ Package: gg.tzh
 Type: Package
 Title: Tingting's Extension of ggplot2
 Version: 0.1.0
-Date: 2025-04-12
+Date: 2025-04-28
 Description: Tingting's Extension of ggplot2.
 License: GPL-2
 Encoding: UTF-8
@@ -12,7 +12,7 @@ Authors@R: c(person(given = "Tingting", family =
      c(ORCID = "0000-0001-9971-4844")))
 Language: en-US
 Roxygen: list(markdown = TRUE)
-Depends: R (>= 4.4.0)
+Depends: R (>= 4.5.0)
 Imports: geomtextpath, ggplot2, latex2exp, rlang, scales
 Suggests: grid, VGAM, knitr, quarto, rmarkdown
 RoxygenNote: 7.3.2
