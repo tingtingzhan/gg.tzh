@@ -49,3 +49,4 @@ ggplot() + paths_discrete(
  caption = 'Illustration showing mean-ratio = .77 (Treatment vs. Control)')
  
 }
+\keyword{internal}

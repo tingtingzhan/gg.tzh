@@ -36,7 +36,6 @@ library(scales)
 library(latex2exp)
 ```
 
-
 ```{r}
 #| echo: false
 library(knitr) # for tables in this vignette
@@ -46,26 +45,18 @@ theme_bw() |> theme_set()
 
 ## Terms and Abbreviations
 
-```{r}
-#| echo: false
-#| results: asis
-c(
-  '[|>](https://search.r-project.org/R/refmans/base/html/pipeOp.html)', 'Forward pipe operator introduced in `R` 4.1.0',
-  '`$`', '[Extract](https://search.r-project.org/R/refmans/base/html/Extract.html) parts of an object',
-  '`CRAN`, `R`', '[The Comprehensive R Archive Network](https://cran.r-project.org)',
-  '[`class`](https://search.r-project.org/R/refmans/base/html/class.html)', 'Object class',
-  '[`dbinom`, `pbinom`, `qbinom`](https://search.r-project.org/R/refmans/stats/html/Binomial.html)', 'Binomial density, probability, quantile',
-  '[`dpois`, `ppois`, `qpois`](https://search.r-project.org/R/refmans/stats/html/Poisson.html)', 'Poisson density, probability, quantile',
-  '[`dnorm`, `pnorm`, `qnorm`](https://search.r-project.org/R/refmans/stats/html/Normal.html)', 'Normal density, probability, quantile',
-  '[`L`](https://adv-r.hadley.nz/vectors-chap.html#atomic-vectors)', '[Integer](https://search.r-project.org/R/refmans/base/html/integer.html) notation',
-  '[`label_percent`](https://search.r-project.org/CRAN/refmans/scales/html/label_percent.html)', 'Label for percentages',
-  '[`search`](https://search.r-project.org/R/refmans/base/html/search.html)', 'Search path'
-) |>
-  matrix(nrow = 2L, dimnames = list(c('Term / Abbreviation', 'Description'), NULL)) |>
-  t.default() |>
-  as.data.frame.matrix() |> 
-  kable() 
-```
+| Term / Abbreviation | Description |
+|------------------------------------|------------------------------------|
+| [`|>`](https://search.r-project.org/R/refmans/base/html/pipeOp.html) | Forward pipe operator introduced since `R` 4.1.0 |
+| `$` | [Extract](https://search.r-project.org/R/refmans/base/html/Extract.html) parts of an object |
+| `CRAN`, `R` | [The Comprehensive R Archive Network](https://cran.r-project.org) |
+| [`class`](https://search.r-project.org/R/refmans/base/html/class.html) | Object class |
+| [`dbinom`, `pbinom`, `qbinom`](https://search.r-project.org/R/refmans/stats/html/Binomial.html) | Binomial density, probability, quantile |
+| [`dpois`, `ppois`, `qpois`](https://search.r-project.org/R/refmans/stats/html/Poisson.html) | Poisson density, probability, quantile |
+| [`dnorm`, `pnorm`, `qnorm`](https://search.r-project.org/R/refmans/stats/html/Normal.html) | Normal density, probability, quantile |
+| [`L`](https://adv-r.hadley.nz/vectors-chap.html#atomic-vectors) | [Integer](https://search.r-project.org/R/refmans/base/html/integer.html) notation |
+| [`label_percent`](https://search.r-project.org/CRAN/refmans/scales/html/label_percent.html) | Label for percentages |
+| [`search`](https://search.r-project.org/R/refmans/base/html/search.html) | Search path |
 
 # Function `paths_function()`
 
@@ -97,8 +88,8 @@ ggplot() +
 #| fig-width: 5
 #| fig-height: 3
 ggplot() + 
-  paths_function(fun = dt, dots = list(df=c(1,2,5,Inf)), size = 2.5) +
-  xlim(-4,4)
+  paths_function(fun = dt, dots = list(df = c(1,2,5,Inf)), size = 2.5) +
+  xlim(-4, 4)
 ```
 
 ## $\chi^2$-Distribution
@@ -111,7 +102,7 @@ ggplot() +
     fun = dchisq, dots = list(df = c(1,3,5,10)), 
     hjust = c(.2,.25,.5,.55), size = 3
   ) + 
-  xlim(.2,8)
+  xlim(.2, 8)
 ```
 
 ## $\gamma$-Distribution

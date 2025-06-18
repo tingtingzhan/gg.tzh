@@ -34,6 +34,7 @@
 #'  x = 'Number of Re-Admissions', y = 'Conditional Probabilities', 
 #'  caption = 'Illustration showing mean-ratio = .77 (Treatment vs. Control)')
 #'  
+#' @keywords internal
 #' @importFrom ggplot2 ggplot aes geom_point scale_x_continuous scale_y_continuous labs
 #' @importFrom geomtextpath geom_textpath GeomTextpath
 #' @importFrom rlang .data

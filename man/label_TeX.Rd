@@ -40,3 +40,4 @@ a + facet_grid(~ grp, labeller = label_TeX) +
 # all fine for non-TeX input
 a0 + facet_grid(~ grp0, labeller = label_TeX) 
 }
+\keyword{internal}
