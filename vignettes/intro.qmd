@@ -30,7 +30,6 @@ Examples in this vignette require that the `search` path has
 
 ```{r}
 library(gg.tzh)
-library(ggplot2)
 library(geomtextpath)
 library(scales)
 library(latex2exp)
@@ -38,25 +37,8 @@ library(latex2exp)
 
 ```{r}
 #| echo: false
-library(knitr) # for tables in this vignette
-#options(mc.cores = 1L) # for CRAN submission
 theme_bw() |> theme_set()
 ```
-
-## Terms and Abbreviations
-
-| Term / Abbreviation | Description |
-|------------------------------------|------------------------------------|
-| [`|>`](https://search.r-project.org/R/refmans/base/html/pipeOp.html) | Forward pipe operator introduced since `R` 4.1.0 |
-| `$` | [Extract](https://search.r-project.org/R/refmans/base/html/Extract.html) parts of an object |
-| `CRAN`, `R` | [The Comprehensive R Archive Network](https://cran.r-project.org) |
-| [`class`](https://search.r-project.org/R/refmans/base/html/class.html) | Object class |
-| [`dbinom`, `pbinom`, `qbinom`](https://search.r-project.org/R/refmans/stats/html/Binomial.html) | Binomial density, probability, quantile |
-| [`dpois`, `ppois`, `qpois`](https://search.r-project.org/R/refmans/stats/html/Poisson.html) | Poisson density, probability, quantile |
-| [`dnorm`, `pnorm`, `qnorm`](https://search.r-project.org/R/refmans/stats/html/Normal.html) | Normal density, probability, quantile |
-| [`L`](https://adv-r.hadley.nz/vectors-chap.html#atomic-vectors) | [Integer](https://search.r-project.org/R/refmans/base/html/integer.html) notation |
-| [`label_percent`](https://search.r-project.org/CRAN/refmans/scales/html/label_percent.html) | Label for percentages |
-| [`search`](https://search.r-project.org/R/refmans/base/html/search.html) | Search path |
 
 # Function `paths_function()`
 
@@ -156,3 +138,22 @@ ggplot() +
 ggplot() + 
   paths_discrete(VGAM::dgenpois1, dots = list(meanpar = 2, dispind = 1:3), xlim = 10L, size = 2L)
 ```
+
+
+# Appendix
+
+## Terms and Abbreviations
+
+| Term / Abbreviation | Description |
+|------------------------------------|------------------------------------|
+| [`|>`](https://search.r-project.org/R/refmans/base/html/pipeOp.html) | Forward pipe operator introduced since `R` 4.1.0 |
+| `$` | [Extract](https://search.r-project.org/R/refmans/base/html/Extract.html) parts of an object |
+| `CRAN`, `R` | [The Comprehensive R Archive Network](https://cran.r-project.org) |
+| [`class`](https://search.r-project.org/R/refmans/base/html/class.html) | Object class |
+| [`dbinom`, `pbinom`, `qbinom`](https://search.r-project.org/R/refmans/stats/html/Binomial.html) | Binomial density, probability, quantile |
+| [`dpois`, `ppois`, `qpois`](https://search.r-project.org/R/refmans/stats/html/Poisson.html) | Poisson density, probability, quantile |
+| [`dnorm`, `pnorm`, `qnorm`](https://search.r-project.org/R/refmans/stats/html/Normal.html) | Normal density, probability, quantile |
+| [`L`](https://adv-r.hadley.nz/vectors-chap.html#atomic-vectors) | [Integer](https://search.r-project.org/R/refmans/base/html/integer.html) notation |
+| [`label_percent`](https://search.r-project.org/CRAN/refmans/scales/html/label_percent.html) | Label for percentages |
+| [`search`](https://search.r-project.org/R/refmans/base/html/search.html) | Search path |
+
