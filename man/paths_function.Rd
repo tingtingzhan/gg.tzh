@@ -52,13 +52,10 @@ Multiple function \emph{\strong{geom}}etric objects
 with different parameters.
 }
 \examples{
-library(ggplot2)
-library(geomtextpath)
-library(latex2exp)
 ggplot() + 
  paths_function(
   fun = dnorm, dots = list(mean = 1:0), hjust = .4,
-  label = TeX(c('$mu_1=1$', '$mu_0=0$')) # bug; prefer unicode
+  label = latex2exp::TeX(c('$mu_1=1$', '$mu_0=0$')) # bug; prefer unicode
  ) + 
  xlim(-3, 4)
 

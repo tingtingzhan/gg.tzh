@@ -41,19 +41,15 @@
 #' \link[ggplot2]{layer}s.
 #' 
 #' @examples
-#' library(ggplot2)
-#' library(geomtextpath)
-#' library(latex2exp)
 #' ggplot() + 
 #'  paths_function(
 #'   fun = dnorm, dots = list(mean = 1:0), hjust = .4,
-#'   label = TeX(c('$mu_1=1$', '$mu_0=0$')) # bug; prefer unicode
+#'   label = latex2exp::TeX(c('$mu_1=1$', '$mu_0=0$')) # bug; prefer unicode
 #'  ) + 
 #'  xlim(-3, 4)
 #' 
 #' @keywords internal
 #' @importFrom ggplot2 stat_function
-#' @importFrom geomtextpath textpathGrob GeomTextpath
 #' @importFrom stats setNames
 #' @export
 paths_function <- function(
@@ -110,7 +106,7 @@ paths_function <- function(
     ), 
     MoreArgs = list(
       fun = fun, 
-      geom = 'textpath', # must Depends geomtextpath; Imports does not work. why??
+      geom = 'textpath', # must Depends \CRANpkg{geomtextpath}; Imports does not work. why??
       show.legend = FALSE, 
       parse = parse,
       ...

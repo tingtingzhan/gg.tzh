@@ -9,7 +9,7 @@ toc: true
 toc-location: left
 toc-depth: 4
 toc-title: ''
-editor: visual
+editor: source
 knitr:
   opts_chunk: 
     collapse: true
@@ -30,9 +30,6 @@ Examples in this vignette require that the `search` path has
 
 ```{r}
 library(gg.tzh)
-library(geomtextpath)
-library(scales)
-library(latex2exp)
 ```
 
 ```{r}
@@ -60,7 +57,7 @@ ggplot() +
     fun = pnorm, dots = list(mean = 0, sd = c(1, 2)), 
     aes_ = c('color', 'linetype'), hjust = .3, size = 3
   ) + 
-  scale_y_continuous(label = label_percent()) +
+  scale_y_continuous(label = scales::label_percent()) +
   xlim(-3, 3)
 ```
 
