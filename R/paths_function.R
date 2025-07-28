@@ -127,22 +127,16 @@ paths_function <- function(
 
 getval_ <- function(x) {
   
-  ret <- sprintf(fmt = '%s = %.3g', names(x), x) |>
+  sprintf(fmt = '%s = %.3g', names(x), x) |>
     sub(pattern = '([-]?)0[.]', replacement = '\\1.') |> # remove leading zero
-    paste0(collapse = '; ')
-  
-  if (getOption('use_unicode')) {
-    ret <- ret |> 
-      gsub(pattern = 'Inf', replacement = '\u221e') |>
-      gsub(pattern = 'alpha', replacement = '\u03b1') |>
-      gsub(pattern = 'lambda', replacement = '\u03bb') |>
-      gsub(pattern = 'nu', replacement = '\u03bd') |>
-      gsub(pattern = 'xi', replacement = '\u03be') |>
-      gsub(pattern = 'omega', replacement = '\u03c9')
-  }
-  
-  return(ret)
-  
+    paste0(collapse = '; ') |>
+    gsub(pattern = 'Inf', replacement = '\u221e') |>
+    gsub(pattern = 'alpha', replacement = '\u03b1') |>
+    gsub(pattern = 'lambda', replacement = '\u03bb') |>
+    gsub(pattern = 'nu', replacement = '\u03bd') |>
+    gsub(pattern = 'xi', replacement = '\u03be') |>
+    gsub(pattern = 'omega', replacement = '\u03c9')
+
 }
 
 
