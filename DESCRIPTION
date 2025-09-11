@@ -11,8 +11,8 @@ Authors@R: c(person(given = "Tingting", family =
      c(ORCID = "0000-0001-9971-4844")))
 Language: en-US
 Roxygen: list(markdown = TRUE)
-Depends: R (>= 4.5.0), ggplot2 (== 3.5.2), geomtextpath (== 0.2.0)
+Depends: R (>= 4.5.0), ggplot2 (== 4.0.0), geomtextpath (== 0.2.0)
 Imports: latex2exp (== 0.9.6), rlang (== 1.1.6), scales (== 1.4.0)
 Suggests: grid, VGAM, knitr, quarto, rmarkdown
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 VignetteBuilder: quarto
