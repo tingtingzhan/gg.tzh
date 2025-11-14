@@ -36,7 +36,6 @@
 #' # all fine for non-TeX input
 #' a0 + facet_grid(~ grp0, labeller = label_TeX) 
 #' @keywords internal
-#' @importFrom ggplot2 label_parsed
 #' @importFrom latex2exp TeX
 #' @export
 label_TeX <- function(labels, ...) {

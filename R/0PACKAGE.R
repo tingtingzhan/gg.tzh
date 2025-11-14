@@ -1,6 +1,8 @@
 
 
 #' @keywords internal
+#' @import ggplot2
+#' @import stats
 '_PACKAGE'
 
 # as of geomtextpath v0.2.0

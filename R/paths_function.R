@@ -49,8 +49,6 @@
 #'  xlim(-3, 4)
 #' 
 #' @keywords internal
-#' @importFrom ggplot2 stat_function
-#' @importFrom stats setNames
 #' @export
 paths_function <- function(
     fun, 
