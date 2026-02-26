@@ -13,6 +13,6 @@ Language: en-US
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.5.0), ggplot2 (== 4.0.2), geomtextpath (== 0.2.0)
 Imports: latex2exp (== 0.9.8), rlang (== 1.1.7), scales (== 1.4.0)
-Suggests: grid, VGAM (== 1.1.14), knitr, quarto, rmarkdown
+Suggests: grid, VGAM (== 1.1.14), 
 RoxygenNote: 7.3.3
-VignetteBuilder: quarto
+
