@@ -10,8 +10,7 @@ Authors@R: c(person(given = "Tingting", family =
      "tingtingzhan@gmail.com", comment =
      c(ORCID = "0000-0001-9971-4844")))
 Language: en-US
-Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.5.0), ggplot2 (== 4.0.3), geomtextpath (== 0.2.0)
 Imports: latex2exp (== 0.9.8), rlang (== 1.2.0), scales (== 1.4.0)
-RoxygenNote: 7.3.3
-
+Config/roxygen2/version: 8.0.0
+Config/roxygen2/markdown: TRUE
